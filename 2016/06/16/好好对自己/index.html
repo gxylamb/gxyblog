@@ -8,19 +8,34 @@
 
 <title>
   
-    Archive: 2016
+    好好对自己
   
 </title>
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Minas Tirith">
-<meta property="og:url" content="http://gxylamb.github.io/gxyblog/archives/2016/index.html">
+<meta name="description" content="不要自己跟自己过不去
+雨中的东京
+日本梅雨季的到来，让东京的雨说下就下，买便当的路上还是细雨蒙蒙，便当做好了转头就稀里哗啦下个不停，这无常的天气，反而让我更加失落。
+
+##半夜的总武线搬家之后，每天都开始12：20从研究所出发，然后12:41上总武线。因为难以抵抗的孤独感，我都会选择从锦系町下车，然后步行走到龟户回家。这一路挂着耳机听着EDM，感觉自己如果不自言自语再加上胡思乱想，低落的情绪是没法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="好好对自己">
+<meta property="og:url" content="http://gxylamb.github.io/gxyblog/2016/06/16/好好对自己/index.html">
 <meta property="og:site_name" content="Minas Tirith">
-<meta property="og:description">
+<meta property="og:description" content="不要自己跟自己过不去
+雨中的东京
+日本梅雨季的到来，让东京的雨说下就下，买便当的路上还是细雨蒙蒙，便当做好了转头就稀里哗啦下个不停，这无常的天气，反而让我更加失落。
+
+##半夜的总武线搬家之后，每天都开始12：20从研究所出发，然后12:41上总武线。因为难以抵抗的孤独感，我都会选择从锦系町下车，然后步行走到龟户回家。这一路挂着耳机听着EDM，感觉自己如果不自言自语再加上胡思乱想，低落的情绪是没法">
+<meta property="og:image" content="http://assets.pokemon.com/assets/cms2/img/pokedex/full/065.png">
+<meta property="og:updated_time" content="2016-06-16T13:05:06.680Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Minas Tirith">
-<meta name="twitter:description">
+<meta name="twitter:title" content="好好对自己">
+<meta name="twitter:description" content="不要自己跟自己过不去
+雨中的东京
+日本梅雨季的到来，让东京的雨说下就下，买便当的路上还是细雨蒙蒙，便当做好了转头就稀里哗啦下个不停，这无常的天气，反而让我更加失落。
+
+##半夜的总武线搬家之后，每天都开始12：20从研究所出发，然后12:41上总武线。因为难以抵抗的孤独感，我都会选择从锦系町下车，然后步行走到龟户回家。这一路挂着耳机听着EDM，感觉自己如果不自言自语再加上胡思乱想，低落的情绪是没法">
+<meta name="twitter:image" content="http://assets.pokemon.com/assets/cms2/img/pokedex/full/065.png">
 
 
   <link rel="alternative" href="/atom.xml" title="Minas Tirith" type="application/atom+xml">
@@ -152,103 +167,26 @@
       
         <div style="max-width: 1000px">
       
-          
-
+          <article id="post-好好对自己" class="article article-type-post">
+  
+    <h1 class="article-header">
+      好好对自己
+    </h1>
   
   
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <h1><a href="/gxyblog/archives/2016" class="archive-year">2016</a></h1>
-        </div>
-        <div class="post-list">
-    
-  
 
-    <div class="post-list-item article">
-      <h3 class="article-header">
-        <a href="/gxyblog/2016/06/16/BP算法总结/" >
-  BP算法总结
-</a>
-
-      </h3>
-      
-
-      <div class="article-info">
-        <a href="/gxyblog/2016/06/16/BP算法总结/"><span class="article-date">
+  <div class="article-info">
+    <span class="article-date">
   2016-06-16
 </span>
-</a>
-        
 
-        
-
-      </div>
-      <div class="article-entry">
-        
-          <p>#Back-Propagation算法</p>
-<p>其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;CNN&amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模型、符号、下标的使用有不同的习惯，才会让给人如下感觉：</p>
-<blockquote>
-<p>“握草这跟我的理解不一样啊！”</p>
-</blockquote>
-<p>当然这篇文章对于BP的总结，第一是为了开启这个blog，总结对deep learning的理解，以便以后的回顾。第二也是觉得作为一个coder，最重要的东西就是笔记，这个笔记是git，是blog，也是反复刷leetcode,第三则是为了能够理解LSTM中各种门的作用。</p>
-<p>##准备</p>
-<p>假设f是多元函数，我们要计算</p>
-<blockquote>
-<p>A=f(x<sub>1</sub>,x<sub>2</sub>,…,x<sub>n</sub>)<br>这个多远函数的极小值，必然要选择的是梯度下降法(gradient descent)。从最初的自变量开始，带入求得A<sup><em></em></sup>，如果对A<sup></sup>不满意，则计算在初始点的梯度<br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xe527yx2g202h0160hm.gif" alt="公式1"><br>并且按照如下公式更新：<br><img src="http://ww2.sinaimg.cn/large/76e7cc24gw1f4xe8jpllpg205g0160nt.gif" alt="公式2"></p>
-</blockquote>
-<p>而对于梯度则是一个向量，对于当前函数上的点变化最大的切线向量。在二维情况下，对应的就是一个二维向量，而梯度的模是某个自变量变化为1时，因变量变化的量。可以知道如果对z=f(x,y)，对x，y分别求偏导，则梯度为：</p>
-<blockquote>
-<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xed5nperg201w0160h4.gif" alt="公式3"><br>举个简单例子<br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xeevz7t1g202p00k0bc.gif" alt="公式4"><br>对x求偏导后为2x,对y求偏导后为4y,那么从点(0,4)出发去求其最小值，η取0.1。当我们下降到点(2,2)的时候，可以知道梯度为(4,8)。更新后的x=2-0.1<em>4，y=2-0.1</em>8，此时z=5.44<16，但是尚未到迭代的停止条件，其条件应该为z`>z，那么前一状态就是我们需要的特征值。</16，但是尚未到迭代的停止条件，其条件应该为z`></p>
-</blockquote>
-<p>##sigmoid的函数</p>
-<p>为了省事我就不写sigmoid的公式了。我们知道求导之后的sigmoid函数f’(x)=f(x)*(1-f(x))。我在这周也弄清了为何神经网络都喜欢用激活函数的原因，也许会在接下来的blog写出。但是sigmoid广泛的使用应该则是因为她求导后漂亮的形式。</p>
-<blockquote>
-<p><strong>而且sigmoid的导数总是一个非负的值</strong><br>代价函数随意，我们这里用L来表示。<br>X是权重w和x的内积，w.dot(x)，在这里我们需要对w的每个entry求偏导:<br><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f4xeuk613og208m015741.gif" alt="公式5"><br>更新的方式如上。举个实际的简单例子（例子引用于<a href="http://blog.csdn.net/pennyliang/article/details/6695355" target="_blank" rel="external">博客</a>）：<br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xexin3h3j20f005pt8z.jpg" alt="例子"><br>每个神经元的激活函数都是sigmoid。<br>我们可以知道<br>P=sigmoid(0.35<em>0.1+0.9</em>0.8)=0.68<br>Q=sigmoid(0.35<em>0.4+0.9</em>0.6)=0.6637<br>O=sigmoid(0.68<em>0.3+0.6637</em>0.9)=0.69</p>
-</blockquote>
-<p>然后根据loss function来更新权重。假设其lablel为0.5,L=0.5<em>(y`-y)^2。那么L=0.5</em>（0.69—0.5）^2=0.01805。我们要使得Loss function接近0，当然采用梯度下降法：</p>
-<blockquote>
-<p><img src="http://ww1.sinaimg.cn/large/76e7cc24gw1f4xf7k8qbmg20dr0163ya.gif" alt="公式6"><br>同理到输入层也利用如上的链式求导更新：<br>e<em>output</em>(1-output)<em>PO`</em>P<em>(1-P)</em>A_input<br>之后就是各种迭代过程以近似逼近0.5。</p>
-</blockquote>
-<p>##总结<br><em>参数的选取很重要，也就是学习的步调，会很大程度影响最后学到的“最优”特征值。
-</em>根据例子中更新输入层的公式，我们可以看出残差回传的时候会越来越小，这也导致了RNN训练上的困难——gradient vanishing，但为什么CNN没有提到这个问题有待继续研究<br>*每次传到上一层的时候，我们利用的权重是经过更新的权重，这样的话从现实理解感觉并不合理，但是毕竟我数学功底不够，所以应该还是符合一定道理的。</p>
-<p>##可以参考的文献<br>1.<a href="http://www.rgu.ac.uk/files/chapter3%20-%20bp.pdf" target="_blank" rel="external">http://www.rgu.ac.uk/files/chapter3%20-%20bp.pdf</a><br>2.<a href="http://www.cedar.buffalo.edu/~srihari/CSE574/Chap5/Chap5.3-BackProp.pdf" target="_blank" rel="external">http://www.cedar.buffalo.edu/~srihari/CSE574/Chap5/Chap5.3-BackProp.pdf</a></p>
-
-        
-      </div>
-    </div>
-
-  
-
-  
-  
     
-  
 
-    <div class="post-list-item article">
-      <h3 class="article-header">
-        <a href="/gxyblog/2016/06/16/好好对自己/" >
-  好好对自己
-</a>
+    
 
-      </h3>
-      
-
-      <div class="article-info">
-        <a href="/gxyblog/2016/06/16/好好对自己/"><span class="article-date">
-  2016-06-16
-</span>
-</a>
-        
-
-        
-
-      </div>
-      <div class="article-entry">
-        
-          <h1 id="不要自己跟自己过不去"><a href="#不要自己跟自己过不去" class="headerlink" title="不要自己跟自己过不去"></a>不要自己跟自己过不去</h1><p><img src="http://assets.pokemon.com/assets/cms2/img/pokedex/full/065.png" alt="blog配图"></p>
+  </div>
+  <div class="article-entry">
+    <h1 id="不要自己跟自己过不去"><a href="#不要自己跟自己过不去" class="headerlink" title="不要自己跟自己过不去"></a>不要自己跟自己过不去</h1><p><img src="http://assets.pokemon.com/assets/cms2/img/pokedex/full/065.png" alt="blog配图"></p>
 <h2 id="雨中的东京"><a href="#雨中的东京" class="headerlink" title="雨中的东京"></a>雨中的东京</h2><blockquote>
 <p>日本梅雨季的到来，让东京的雨说下就下，买便当的路上还是细雨蒙蒙，便当做好了转头就稀里哗啦下个不停，这无常的天气，反而让我更加失落。</p>
 </blockquote>
@@ -261,11 +199,29 @@
 <p>这样的滋味真的并不好受。我只想好好对自己，只希望我还是曾经在吉大北区牡丹园无脑疯跑傻笑的自己。</p>
 </blockquote>
 
+  </div>
+  <footer class="article-footer">
+    
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/gxyblog/images/cc/cc.png">
+      
+          <img src="/gxyblog/images/cc/by.png">
         
-      </div>
-    </div>
+          <img src="/gxyblog/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
 
-  
+
+    
+
+  </footer>
+</article>
+
 
 
 
