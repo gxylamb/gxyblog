@@ -12,14 +12,12 @@
   
 </title>
 
-<meta name="description" content="#Back-Propagation算法
-其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;amp;CNN&amp;amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模">
+<meta name="description" content="Back-Propagation算法其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;amp;CNN&amp;amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模型、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BP算法总结">
 <meta property="og:url" content="http://gxylamb.github.io/gxyblog/2016/06/16/BP算法总结/index.html">
 <meta property="og:site_name" content="Minas Tirith">
-<meta property="og:description" content="#Back-Propagation算法
-其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;amp;CNN&amp;amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模">
+<meta property="og:description" content="Back-Propagation算法其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;amp;CNN&amp;amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模型、">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xe527yx2g202h0160hm.gif">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/76e7cc24gw1f4xe8jpllpg205g0160nt.gif">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xed5nperg201w0160h4.gif">
@@ -27,11 +25,10 @@
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/76e7cc24gw1f4xeuk613og208m015741.gif">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xexin3h3j20f005pt8z.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/76e7cc24gw1f4xf7k8qbmg20dr0163ya.gif">
-<meta property="og:updated_time" content="2016-06-16T14:26:14.064Z">
+<meta property="og:updated_time" content="2016-06-16T14:35:14.612Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BP算法总结">
-<meta name="twitter:description" content="#Back-Propagation算法
-其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;amp;CNN&amp;amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模">
+<meta name="twitter:description" content="Back-Propagation算法其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;amp;CNN&amp;amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模型、">
 <meta name="twitter:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xe527yx2g202h0160hm.gif">
 
 
@@ -183,33 +180,56 @@
 
   </div>
   <div class="article-entry">
-    <p>#Back-Propagation算法</p>
-<p>其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;CNN&amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模型、符号、下标的使用有不同的习惯，才会让给人如下感觉：</p>
+    <h1 id="Back-Propagation算法"><a href="#Back-Propagation算法" class="headerlink" title="Back-Propagation算法"></a>Back-Propagation算法</h1><p>其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;CNN&amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模型、符号、下标的使用有不同的习惯，才会让给人如下感觉：</p>
 <blockquote>
 <p>“握草这跟我的理解不一样啊！”</p>
 </blockquote>
 <p>当然这篇文章对于BP的总结，第一是为了开启这个blog，总结对deep learning的理解，以便以后的回顾。第二也是觉得作为一个coder，最重要的东西就是笔记，这个笔记是git，是blog，也是反复刷leetcode,第三则是为了能够理解LSTM中各种门的作用。</p>
-<p>##准备</p>
-<p>假设f是多元函数，我们要计算</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>假设f是多元函数，我们要计算</p>
 <blockquote>
-<p>A=f(x<sub>1</sub>,x<sub>2</sub>,…,x<sub>n</sub>)<br>这个多远函数的极小值，必然要选择的是梯度下降法(gradient descent)。从最初的自变量开始，带入求得A<sup><em></em></sup>，如果对A<sup></sup>不满意，则计算在初始点的梯度<br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xe527yx2g202h0160hm.gif" alt="公式1"><br>并且按照如下公式更新：<br><img src="http://ww2.sinaimg.cn/large/76e7cc24gw1f4xe8jpllpg205g0160nt.gif" alt="公式2"></p>
+<p>A=f(x<sub>1</sub>,x<sub>2</sub>,…,x<sub>n</sub>)<br>这个多远函数的极小值，必然要选择的是梯度下降法(gradient descent)。从最初的自变量开始，带入求得A<sup><em></em></sup>，如果对A<sup></sup>不满意，则计算在初始点的梯度</p>
+<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xe527yx2g202h0160hm.gif" alt="公式1"></p>
+</blockquote>
+<p>并且按照如下公式更新：</p>
+<blockquote>
+<p><img src="http://ww2.sinaimg.cn/large/76e7cc24gw1f4xe8jpllpg205g0160nt.gif" alt="公式2"></p>
 </blockquote>
 <p>而对于梯度则是一个向量，对于当前函数上的点变化最大的切线向量。在二维情况下，对应的就是一个二维向量，而梯度的模是某个自变量变化为1时，因变量变化的量。可以知道如果对z=f(x,y)，对x，y分别求偏导，则梯度为：</p>
 <blockquote>
-<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xed5nperg201w0160h4.gif" alt="公式3"><br>举个简单例子<br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xeevz7t1g202p00k0bc.gif" alt="公式4"><br>对x求偏导后为2x,对y求偏导后为4y,那么从点(0,4)出发去求其最小值，η取0.1。当我们下降到点(2,2)的时候，可以知道梯度为(4,8)。更新后的x=2-0.1<em>4，y=2-0.1</em>8，此时z=5.44<16，但是尚未到迭代的停止条件，其条件应该为z`>z，那么前一状态就是我们需要的特征值。</16，但是尚未到迭代的停止条件，其条件应该为z`></p>
+<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xed5nperg201w0160h4.gif" alt="公式3"></p>
 </blockquote>
-<p>##sigmoid的函数</p>
-<p>为了省事我就不写sigmoid的公式了。我们知道求导之后的sigmoid函数f’(x)=f(x)*(1-f(x))。我在这周也弄清了为何神经网络都喜欢用激活函数的原因，也许会在接下来的blog写出。但是sigmoid广泛的使用应该则是因为她求导后漂亮的形式。</p>
+<p>举个简单例子</p>
 <blockquote>
-<p><strong>而且sigmoid的导数总是一个非负的值</strong><br>代价函数随意，我们这里用L来表示。<br>X是权重w和x的内积，w.dot(x)，在这里我们需要对w的每个entry求偏导:<br><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f4xeuk613og208m015741.gif" alt="公式5"><br>更新的方式如上。举个实际的简单例子（例子引用于<a href="http://blog.csdn.net/pennyliang/article/details/6695355" target="_blank" rel="external">博客</a>）：<br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xexin3h3j20f005pt8z.jpg" alt="例子"><br>每个神经元的激活函数都是sigmoid。<br>我们可以知道<br>P=sigmoid(0.35<em>0.1+0.9</em>0.8)=0.68<br>Q=sigmoid(0.35<em>0.4+0.9</em>0.6)=0.6637<br>O=sigmoid(0.68<em>0.3+0.6637</em>0.9)=0.69</p>
+<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xeevz7t1g202p00k0bc.gif" alt="公式4"></p>
+</blockquote>
+<p>对x求偏导后为2x,对y求偏导后为4y,那么从点(0,4)出发去求其最小值，η取0.1。当我们下降到点(2,2)的时候，可以知道梯度为(4,8)。更新后的x=2-0.1<em>4，y=2-0.1</em>8，此时z=5.44<16，但是尚未到迭代的停止条件，其条件应该为z`>z，那么前一状态就是我们需要的特征值。</16，但是尚未到迭代的停止条件，其条件应该为z`></p>
+<h2 id="sigmoid的函数"><a href="#sigmoid的函数" class="headerlink" title="sigmoid的函数"></a>sigmoid的函数</h2><p>为了省事我就不写sigmoid的公式了。我们知道求导之后的sigmoid函数f’(x)=f(x)*(1-f(x))。我在这周也弄清了为何神经网络都喜欢用激活函数的原因，也许会在接下来的blog写出。但是sigmoid广泛的使用应该则是因为她求导后漂亮的形式。</p>
+<blockquote>
+<p><strong>而且sigmoid的导数总是一个非负的值</strong></p>
+</blockquote>
+<p>代价函数随意，我们这里用L来表示。<br>X是权重w和x的内积，w.dot(x)，在这里我们需要对w的每个entry求偏导:</p>
+<blockquote>
+<p><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f4xeuk613og208m015741.gif" alt="公式5"></p>
+</blockquote>
+<p>更新的方式如上。举个实际的简单例子（例子引用于<a href="http://blog.csdn.net/pennyliang/article/details/6695355" target="_blank" rel="external">博客</a>）：<br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xexin3h3j20f005pt8z.jpg" alt="例子"><br>每个神经元的激活函数都是sigmoid。<br>我们可以知道</p>
+<blockquote>
+<p>P=sigmoid(0.35<em>0.1+0.9</em>0.8)=0.68<br>Q=sigmoid(0.35<em>0.4+0.9</em>0.6)=0.6637<br>O=sigmoid(0.68<em>0.3+0.6637</em>0.9)=0.69</p>
 </blockquote>
 <p>然后根据loss function来更新权重。假设其lablel为0.5,L=0.5<em>(y`-y)^2。那么L=0.5</em>（0.69—0.5）^2=0.01805。我们要使得Loss function接近0，当然采用梯度下降法：</p>
 <blockquote>
-<p><img src="http://ww1.sinaimg.cn/large/76e7cc24gw1f4xf7k8qbmg20dr0163ya.gif" alt="公式6"><br>同理到输入层也利用如上的链式求导更新：<br>e<em>output</em>(1-output)<em>PO`</em>P<em>(1-P)</em>A_input<br>之后就是各种迭代过程以近似逼近0.5。</p>
+<p><img src="http://ww1.sinaimg.cn/large/76e7cc24gw1f4xf7k8qbmg20dr0163ya.gif" alt="公式6"></p>
 </blockquote>
-<p>##总结<br><em>参数的选取很重要，也就是学习的步调，会很大程度影响最后学到的“最优”特征值。
-</em>根据例子中更新输入层的公式，我们可以看出残差回传的时候会越来越小，这也导致了RNN训练上的困难——gradient vanishing，但为什么CNN没有提到这个问题有待继续研究<br>*每次传到上一层的时候，我们利用的权重是经过更新的权重，这样的话从现实理解感觉并不合理，但是毕竟我数学功底不够，所以应该还是符合一定道理的。</p>
-<p>##可以参考的文献<br>1.<a href="http://www.rgu.ac.uk/files/chapter3%20-%20bp.pdf" target="_blank" rel="external">http://www.rgu.ac.uk/files/chapter3%20-%20bp.pdf</a><br>2.<a href="http://www.cedar.buffalo.edu/~srihari/CSE574/Chap5/Chap5.3-BackProp.pdf" target="_blank" rel="external">http://www.cedar.buffalo.edu/~srihari/CSE574/Chap5/Chap5.3-BackProp.pdf</a></p>
+<p>同理到输入层也利用如上的链式求导更新：</p>
+<blockquote>
+<p>e<em>output</em>(1-output)<em>PO`</em>P<em>(1-P)</em>A_input</p>
+</blockquote>
+<p>之后就是各种迭代过程以近似逼近0.5。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>参数的选取很重要，也就是学习的步调，会很大程度影响最后学到的“最优”特征值。</li>
+<li>根据例子中更新输入层的公式，我们可以看出残差回传的时候会越来越小，这也导致了RNN训练上的困难——gradient vanishing，但为什么CNN没有提到这个问题有待继续研究</li>
+<li>每次传到上一层的时候，我们利用的权重是经过更新的权重，这样的话从现实理解感觉并不合理，但是毕竟我数学功底不够，所以应该还是符合一定道理的。</li>
+</ul>
+<h2 id="可以参考的文献"><a href="#可以参考的文献" class="headerlink" title="可以参考的文献"></a>可以参考的文献</h2><p>1.<a href="http://www.rgu.ac.uk/files/chapter3%20-%20bp.pdf" target="_blank" rel="external">http://www.rgu.ac.uk/files/chapter3%20-%20bp.pdf</a><br>2.<a href="http://www.cedar.buffalo.edu/~srihari/CSE574/Chap5/Chap5.3-BackProp.pdf" target="_blank" rel="external">http://www.cedar.buffalo.edu/~srihari/CSE574/Chap5/Chap5.3-BackProp.pdf</a></p>
 
   </div>
   <footer class="article-footer">
