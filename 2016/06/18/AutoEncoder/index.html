@@ -8,19 +8,35 @@
 
 <title>
   
-    Archive
+    AutoEncoder
   
 </title>
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Minas Tirith">
-<meta property="og:url" content="http://gxylamb.github.io/gxyblog/archives/index.html">
+<meta name="description" content="AutoEncoder的学习和总结前言：
+因为我选的方向就是对word representation用Auto Encoder去学习，看是否能学到有用的feature进而可以提升相对应的specific task。之前的工作出现了很大的问题，第一就是没用tied weights(这只能说我傻了，明明是symmetric model 权重矩阵怎么会不同呢)。其次就是可能不够deep，这回多加一个la">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AutoEncoder">
+<meta property="og:url" content="http://gxylamb.github.io/gxyblog/2016/06/18/AutoEncoder/index.html">
 <meta property="og:site_name" content="Minas Tirith">
-<meta property="og:description">
+<meta property="og:description" content="AutoEncoder的学习和总结前言：
+因为我选的方向就是对word representation用Auto Encoder去学习，看是否能学到有用的feature进而可以提升相对应的specific task。之前的工作出现了很大的问题，第一就是没用tied weights(这只能说我傻了，明明是symmetric model 权重矩阵怎么会不同呢)。其次就是可能不够deep，这回多加一个la">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f4zomrmd0zg205y00k0o1.gif">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/76e7cc24gw1f4zoyetovxg206e0140sh.gif">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/76e7cc24gw1f4zpciv4wwg20gh02bt8i.gif">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/76e7cc24gw1f4zpfjtshag20ay015mwx.gif">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/76e7cc24gw1f4zpgk67i6g207h0153y9.gif">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/76e7cc24gw1f4zpsfznrog20ay014gld.gif">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f4zqjza0qvg204q01b0sh.gif">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/76e7cc24gw1f4zqnobx8lg206k01da9t.gif">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/76e7cc24gw1f4zqr2mat2g2077016a9t.gif">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f4zqsq3v27g20da00rwe9.gif">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/76e7cc24gw1f4zr954tveg204d00r0o8.gif">
+<meta property="og:updated_time" content="2016-06-18T15:03:49.798Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Minas Tirith">
-<meta name="twitter:description">
+<meta name="twitter:title" content="AutoEncoder">
+<meta name="twitter:description" content="AutoEncoder的学习和总结前言：
+因为我选的方向就是对word representation用Auto Encoder去学习，看是否能学到有用的feature进而可以提升相对应的specific task。之前的工作出现了很大的问题，第一就是没用tied weights(这只能说我傻了，明明是symmetric model 权重矩阵怎么会不同呢)。其次就是可能不够deep，这回多加一个la">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f4zomrmd0zg205y00k0o1.gif">
 
 
   <link rel="alternative" href="/atom.xml" title="Minas Tirith" type="application/atom+xml">
@@ -152,43 +168,26 @@
       
         <div style="max-width: 1000px">
       
-          
-
+          <article id="post-AutoEncoder" class="article article-type-post">
+  
+    <h1 class="article-header">
+      AutoEncoder
+    </h1>
   
   
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <h1><a href="/gxyblog/archives/2016" class="archive-year">2016</a></h1>
-        </div>
-        <div class="post-list">
-    
-  
 
-    <div class="post-list-item article">
-      <h3 class="article-header">
-        <a href="/gxyblog/2016/06/18/AutoEncoder/" >
-  AutoEncoder
-</a>
-
-      </h3>
-      
-
-      <div class="article-info">
-        <a href="/gxyblog/2016/06/18/AutoEncoder/"><span class="article-date">
+  <div class="article-info">
+    <span class="article-date">
   2016-06-18
 </span>
-</a>
-        
 
-        
+    
 
-      </div>
-      <div class="article-entry">
-        
-          <h1 id="AutoEncoder的学习和总结"><a href="#AutoEncoder的学习和总结" class="headerlink" title="AutoEncoder的学习和总结"></a>AutoEncoder的学习和总结</h1><h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><blockquote>
+    
+
+  </div>
+  <div class="article-entry">
+    <h1 id="AutoEncoder的学习和总结"><a href="#AutoEncoder的学习和总结" class="headerlink" title="AutoEncoder的学习和总结"></a>AutoEncoder的学习和总结</h1><h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><blockquote>
 <p>因为我选的方向就是对word representation用Auto Encoder去学习，看是否能学到有用的feature进而可以提升相对应的specific task。之前的工作出现了很大的问题，第一就是没用tied weights(这只能说我傻了，明明是symmetric model 权重矩阵怎么会不同呢)。其次就是可能不够deep，这回多加一个layer，并用 tensorflow来学习看是否能有良好的效果。其实成败在此一举了。sigh</p>
 </blockquote>
 <h2 id="The-Potential-Energy-of-an-Autoencoder"><a href="#The-Potential-Energy-of-an-Autoencoder" class="headerlink" title="The Potential Energy of an Autoencoder"></a>The Potential Energy of an Autoencoder</h2><p>第一节的标题就直接用我阅读的paper吧，感兴趣的话可以去google scholar搜这篇文章。这篇文章一大特点就是一直将autoencoder和RBM(restricted boltzmann machine)对比。并且直接用了RBM的一些定义，如energy function，energy surface等等。因为定义的转变，和大量的公式，在理解起来非常的晦涩。直到现在都没能正确理解文中提到的surface是一个怎样的几何概念。</p>
@@ -238,148 +237,29 @@
 <p>总之，雅克比行列式表示不同坐标下的转换尺度。但这里应该主要是针对过完备的表达。实际上降维的话直接L2范式应该足以。通过采用雅克比矩阵就使得每一个在高维流形上的点(也就是学到的特征)具有局部不变性。这个可以通过计算局部流形的一阶导数获得，于是就出现了雅克比矩阵。</p>
 <p><a href="https://www.youtube.com/watch?v=p4Vh_zMw-HQ" target="_blank" rel="external">RBM教学可以看看</a></p>
 
-        
-      </div>
-    </div>
-
-  
-
-  
-  
+  </div>
+  <footer class="article-footer">
     
-  
-
-    <div class="post-list-item article">
-      <h3 class="article-header">
-        <a href="/gxyblog/2016/06/16/BP算法总结/" >
-  BP算法总结
-</a>
-
-      </h3>
+  <div class="cc">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" title="Attribution-ShareAlike">
+      <img src="/gxyblog/images/cc/cc.png">
       
-
-      <div class="article-info">
-        <a href="/gxyblog/2016/06/16/BP算法总结/"><span class="article-date">
-  2016-06-16
-</span>
-</a>
+          <img src="/gxyblog/images/cc/by.png">
         
+          <img src="/gxyblog/images/cc/sa.png">
+      
+      <span>
+        This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+      </span>
+    </a>
+  </div>
 
-        
 
-      </div>
-      <div class="article-entry">
-        
-          <h1 id="Back-Propagation算法"><a href="#Back-Propagation算法" class="headerlink" title="Back-Propagation算法"></a>Back-Propagation算法</h1><p>其实Back-propagation算法本质并不难理解，就是很简单的”链式求导”。但其出现的时间之晚也是让人诧异。不过我一直以为来对高维欧式空间缺乏足够的理解，换言之就是当我第一次看RNN&amp;CNN&amp;Autoencoder的时候我用了接近一个月的时间，去拥有一个我认为差不多的理解。当然这口锅我还是应该甩一下，我个人认为是因为不同的人，对于NN模型、符号、下标的使用有不同的习惯，才会让给人如下感觉：</p>
-<blockquote>
-<p>“握草这跟我的理解不一样啊！”</p>
-</blockquote>
-<p>当然这篇文章对于BP的总结，第一是为了开启这个blog，总结对deep learning的理解，以便以后的回顾。第二也是觉得作为一个coder，最重要的东西就是笔记，这个笔记是git，是blog，也是反复刷leetcode,第三则是为了能够理解LSTM中各种门的作用。</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>假设f是多元函数，我们要计算</p>
-<blockquote>
-<p>A=f(x<sub>1</sub>,x<sub>2</sub>,…,x<sub>n</sub>)<br>这个多远函数的极小值，必然要选择的是梯度下降法(gradient descent)。从最初的自变量开始，带入求得A<sup><em></em></sup>，如果对A<sup></sup>不满意，则计算在初始点的梯度</p>
-<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xe527yx2g202h0160hm.gif" alt="公式1"></p>
-</blockquote>
-<p>并且按照如下公式更新：</p>
-<blockquote>
-<p><img src="http://ww2.sinaimg.cn/large/76e7cc24gw1f4xe8jpllpg205g0160nt.gif" alt="公式2"></p>
-</blockquote>
-<p>而对于梯度则是一个向量，对于当前函数上的点变化最大的切线向量。在二维情况下，对应的就是一个二维向量，而梯度的模是某个自变量变化为1时，因变量变化的量。可以知道如果对z=f(x,y)，对x，y分别求偏导，则梯度为：</p>
-<blockquote>
-<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xed5nperg201w0160h4.gif" alt="公式3"></p>
-</blockquote>
-<p>举个简单例子</p>
-<blockquote>
-<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xeevz7t1g202p00k0bc.gif" alt="公式4"></p>
-</blockquote>
-<p>对x求偏导后为2x,对y求偏导后为4y,那么从点(0,4)出发去求其最小值，η取0.1。当我们下降到点(2,2)的时候，可以知道梯度为(4,8)。更新后的x=2-0.1<em>4，y=2-0.1</em>8，此时z=5.44<16，但是尚未到迭代的停止条件，其条件应该为z`>z，那么前一状态就是我们需要的特征值。</16，但是尚未到迭代的停止条件，其条件应该为z`></p>
-<h2 id="sigmoid的函数"><a href="#sigmoid的函数" class="headerlink" title="sigmoid的函数"></a>sigmoid的函数</h2><p>为了省事我就不写sigmoid的公式了。我们知道求导之后的sigmoid函数f’(x)=f(x)*(1-f(x))。我在这周也弄清了为何神经网络都喜欢用激活函数的原因，也许会在接下来的blog写出。但是sigmoid广泛的使用应该则是因为她求导后漂亮的形式。</p>
-<blockquote>
-<p><strong>而且sigmoid的导数总是一个非负的值</strong></p>
-</blockquote>
-<p>代价函数随意，我们这里用L来表示。<br>X是权重w和x的内积，w.dot(x)，在这里我们需要对w的每个entry求偏导:</p>
-<blockquote>
-<p><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f4xeuk613og208m015741.gif" alt="公式5"></p>
-</blockquote>
-<p>更新的方式如上。举个实际的简单例子（例子引用于<a href="http://blog.csdn.net/pennyliang/article/details/6695355" target="_blank" rel="external">博客</a>）：<br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4xexin3h3j20f005pt8z.jpg" alt="例子"><br>每个神经元的激活函数都是sigmoid。<br>我们可以知道</p>
-<blockquote>
-<p>P=sigmoid(0.35<em>0.1+0.9</em>0.8)=0.68<br>Q=sigmoid(0.35<em>0.4+0.9</em>0.6)=0.6637<br>O=sigmoid(0.68<em>0.3+0.6637</em>0.9)=0.69</p>
-</blockquote>
-<p>然后根据loss function来更新权重。假设其lablel为0.5,L=0.5<em>(y`-y)^2。那么L=0.5</em>（0.69—0.5）^2=0.01805。我们要使得Loss function接近0，当然采用梯度下降法：</p>
-<blockquote>
-<p><img src="http://ww1.sinaimg.cn/large/76e7cc24gw1f4xf7k8qbmg20dr0163ya.gif" alt="公式6"></p>
-</blockquote>
-<p>同理到输入层也利用如上的链式求导更新：</p>
-<blockquote>
-<p>e<em>output</em>(1-output)<em>PO`</em>P<em>(1-P)</em>A_input</p>
-</blockquote>
-<p>之后就是各种迭代过程以近似逼近0.5。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>参数的选取很重要，也就是学习的步调，会很大程度影响最后学到的“最优”特征值。</li>
-<li>根据例子中更新输入层的公式，我们可以看出残差回传的时候会越来越小，这也导致了RNN训练上的困难——gradient vanishing，但为什么CNN没有提到这个问题有待继续研究</li>
-<li>每次传到上一层的时候，我们利用的权重是经过更新的权重，这样的话从现实理解感觉并不合理，但是毕竟我数学功底不够，所以应该还是符合一定道理的。</li>
-</ul>
-<h2 id="可以参考的文献"><a href="#可以参考的文献" class="headerlink" title="可以参考的文献"></a>可以参考的文献</h2><p>1.<a href="http://www.rgu.ac.uk/files/chapter3%20-%20bp.pdf" target="_blank" rel="external">http://www.rgu.ac.uk/files/chapter3%20-%20bp.pdf</a><br>2.<a href="http://www.cedar.buffalo.edu/~srihari/CSE574/Chap5/Chap5.3-BackProp.pdf" target="_blank" rel="external">http://www.cedar.buffalo.edu/~srihari/CSE574/Chap5/Chap5.3-BackProp.pdf</a></p>
-
-        
-      </div>
-    </div>
-
-  
-
-  
-  
     
-  
 
-    <div class="post-list-item article">
-      <h3 class="article-header">
-        <a href="/gxyblog/2016/06/16/好好对自己/" >
-  好好对自己
-</a>
+  </footer>
+</article>
 
-      </h3>
-      
-
-      <div class="article-info">
-        <a href="/gxyblog/2016/06/16/好好对自己/"><span class="article-date">
-  2016-06-16
-</span>
-</a>
-        
-
-        
-
-      </div>
-      <div class="article-entry">
-        
-          <h1 id="不要自己跟自己过不去"><a href="#不要自己跟自己过不去" class="headerlink" title="不要自己跟自己过不去"></a>不要自己跟自己过不去</h1><p><img src="http://assets.pokemon.com/assets/cms2/img/pokedex/full/065.png" alt="blog配图"></p>
-<h2 id="雨中的东京"><a href="#雨中的东京" class="headerlink" title="雨中的东京"></a>雨中的东京</h2><blockquote>
-<p>日本梅雨季的到来，让东京的雨说下就下，买便当的路上还是细雨蒙蒙，便当做好了转头就稀里哗啦下个不停，这无常的天气，反而让我更加失落。</p>
-</blockquote>
-<h2 id="半夜的总武线"><a href="#半夜的总武线" class="headerlink" title="半夜的总武线"></a>半夜的总武线</h2><p>搬家之后，每天都开始12：20从研究所出发，然后12:41上总武线。因为难以抵抗的孤独感，我都会选择从锦系町下车，然后步行走到龟户回家。这一路挂着耳机听着EDM，感觉自己如果不自言自语再加上胡思乱想，低落的情绪是没法恢复。</p>
-<blockquote>
-<p><strong>当然就算走了15分钟的路潜藏在内心的暗物质还是没法分解。</strong></p>
-</blockquote>
-<p>当然也不仅仅会是孤独和寂寞才影响我的状态，对于实验进展的无力感，也让我无所适从。尽管我不应该抱怨国内组的情况，也知道自己的积累尚不够，但是当我直接投入到科研中，就像旱鸭子入水，完全不知该如何形成一个solid idea。有的时候，会幻想导师给我一个clear idea然后我去实现，接下来变成一篇paper，但现实总是不如人愿，又或者说我一向都得靠自己，想着去靠别人而这样的福星永远都不会出现。<br>就在前天的半夜，我突然想到一个自身常有的情况。每当我到一个新的阶段，都会回忆之前的上一段经历，然后感慨</p>
-<blockquote>
-<p>“如果我当时要想现在这样多好”<br>本科的时候我会想，如果我高中打球像现在这样多好。到了研究生，我会想如果我本科的形象就像现在这样多好。那样我就敢去见王珏同志了。再细想想，每次考试也会有这样的想法，如果当初我再多做几套高数真题多好，如果当时再有多少时间我就可以悟透奇异值分解和大数定律。<br>好的一点或许是，发现自己一直在变化，一直在像stochastic gradient descent那样朝着局部(?最优解前进。坏的方向则是我这人从来不知道满足，一如我现在对异性的渴望，周围不是没有对我好的女孩，也不是追不到女生，却总是觉得那样那样的女生我想试试，我不想就此打住。<br>不知道从什么时候起，开始极度的排屯，对于不打扮的女生不会打扮的女生，完全没有兴趣。有时在秋叶原闲逛，想的最多的永远是</p>
-<p>“她要是我认识的人我能搞定她”<br>“我喜欢她的高跟鞋”<br>“她男票真心不如我”</p>
-</blockquote>
-<p>这样的性格大概应该还是从我父亲离开后潜移默化形成的。因为家里条件江河日下，而吉大附中又是个小康家庭聚集地，当他们可以买adidas新款的A3篮球鞋的时候，我只能穿着Anta。我想这类情绪的积累总会导致一些极端情绪的产生：过度好强。就像我初中连WCY同学都没服过一样，我只是觉得我从小没用心去悟东西而已。但这个性格已经或多或少影响到我正常的学术生活。我曾以为考研结束后这样的情绪会逐渐淡化，可是到了P大，我发现这样的情绪反而犹如冲着炭火中吹风，越来越强。看看EECS的女生，再看看其他学院的女生，我会心里嫉妒加眼馋。再去三里屯走一圈，可以，这一天的心情都别想好了。来到东京，这个女生出来约会都会穿着高跟的都市，我只想对自己说，relax…</p>
-<blockquote>
-<p><strong>高晓旸你已经变态了</strong></p>
-</blockquote>
-<h2 id="一些心里话"><a href="#一些心里话" class="headerlink" title="一些心里话"></a>一些心里话</h2><p>我已经开始正式考虑来东京生活，for girls?Maybe.for a fair life?Perhaps.<br>然而由于我任性的追求我心中所谓的MA学历必须有的目标，我来到NII而错过了INDEED的招聘。那么Softbank？拜托你不如去华为了呢。那么Rakuten？大哥你怎么不去阿里巴巴。所以一切就认命好了，毕竟心里的dream offer并不在Tokyo。<br>我的心态和性格短期内应该不会有变化，有的时候对自己说，“可能当我的女人缘达到生涯巅峰期的时候”，“可能拿到dream offer工作了之后”，会有一定的起色。但我不想去过多在乎了，我在乎的是我的实验进展，我在乎的是我的publication list。<br>记得小时候，我幻想的是我是架空世界二战里的一个连长，也幻想自己是仙侠世界里的天才弟子。可现在更多是对现实的YY。说到底还是自己太过虚荣，想要的也太多，无底洞般的欲望。当年我穿Anta，现在我穿AJ可是那个会低下头说“你这双AJ11真好看”的人不再有了。当年我不会打球，可我现在杀虐半场和当年所谓打球好的人五五开的时候，却看不到曾经场边那些女孩的身影。<br>每当身边路过BMW 5-class，或者相同以及更高级别的车，我都会去看副驾，然后副驾的情形总会让我本来挂在嘴边的笑容消逝。我想我不是一个自视甚高的人，我在吉大附中师大附中确实有很多看不上的人，也有仰望的人，一直在追逐其脚步。我想我是一个对自我认知比较深刻的人，而正是这个认知，才会让我有多种情绪的混合。</p>
-<blockquote>
-<p>这样的滋味真的并不好受。我只想好好对自己，只希望我还是曾经在吉大北区牡丹园无脑疯跑傻笑的自己。</p>
-</blockquote>
-
-        
-      </div>
-    </div>
-
-  
 
 
 

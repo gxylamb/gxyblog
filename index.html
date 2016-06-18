@@ -100,7 +100,7 @@
             
               <li class="archive-list-container">
                 <a href="javascript:;">Archive</a>
-                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/gxyblog/archives/2016/">2016</a><span class="archive-list-count">2</span></li></ul>
+                <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/gxyblog/archives/2016/">2016</a><span class="archive-list-count">3</span></li></ul>
               </li>
             
           
@@ -153,6 +153,90 @@
         <div style="max-width: 1000px">
       
           
+
+  
+  
+    <div class="post-list">
+  
+
+    <div class="post-list-item article">
+      <h3 class="article-header">
+        <a href="/gxyblog/2016/06/18/AutoEncoder/" >
+  AutoEncoder
+</a>
+
+      </h3>
+      
+
+      <div class="article-info">
+        <a href="/gxyblog/2016/06/18/AutoEncoder/"><span class="article-date">
+  2016-06-18
+</span>
+</a>
+        
+
+        
+
+      </div>
+      <div class="article-entry">
+        
+          <h1 id="AutoEncoder的学习和总结"><a href="#AutoEncoder的学习和总结" class="headerlink" title="AutoEncoder的学习和总结"></a>AutoEncoder的学习和总结</h1><h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><blockquote>
+<p>因为我选的方向就是对word representation用Auto Encoder去学习，看是否能学到有用的feature进而可以提升相对应的specific task。之前的工作出现了很大的问题，第一就是没用tied weights(这只能说我傻了，明明是symmetric model 权重矩阵怎么会不同呢)。其次就是可能不够deep，这回多加一个layer，并用 tensorflow来学习看是否能有良好的效果。其实成败在此一举了。sigh</p>
+</blockquote>
+<h2 id="The-Potential-Energy-of-an-Autoencoder"><a href="#The-Potential-Energy-of-an-Autoencoder" class="headerlink" title="The Potential Energy of an Autoencoder"></a>The Potential Energy of an Autoencoder</h2><p>第一节的标题就直接用我阅读的paper吧，感兴趣的话可以去google scholar搜这篇文章。这篇文章一大特点就是一直将autoencoder和RBM(restricted boltzmann machine)对比。并且直接用了RBM的一些定义，如energy function，energy surface等等。因为定义的转变，和大量的公式，在理解起来非常的晦涩。直到现在都没能正确理解文中提到的surface是一个怎样的几何概念。</p>
+<p>首先说说autoencoder的作用，在unsupervised learning下，利用ae我们可以：</p>
+<ul>
+<li>extract meaningful features and make representation more expilcit</li>
+<li>leverage the availability of unlabeled data</li>
+<li>add a data-dependent regularizer to training<br>对于第三点大概可以理解为就是在loss function上中加入regularizer吧。但是更具体我又有点说不出来。因为直到现在我懂不能完全理解regularizer的意义。</li>
+</ul>
+<p>Introduction中提到：</p>
+<blockquote>
+<p>很多模型包括RBM，define probabilities only up to an intractable normalizing constant,approxiamte maximum likelihood learning typically amounts to optimizing the model only locally, near the training data. 这句话大概阐述了RBM的机理，利用Markovn network来逼近你的data(大概这样吧，对RBM还不是很熟)。</p>
+<p>采用 sigmoid为激活函数的autoencoder，可以很好的performing score matching。其实就是不同的loss function导致学习的方式不同。但实际都是逼近训练数据罢了我认为。而作者又因为ae的score matching又可以和RBM的contractive divergence相关联(逼我看RBM啊)。如果我们用”contraction penalty”也就是regularizer，就可以把ae的reconstruction过程理解为对数据log probability的梯度估计。</p>
+</blockquote>
+<p>本文把ae当成一个动态的系统，而之所以动态是因为我们可以用不同的activation function。<br>先给出一个shallow的ae的输出公式：</p>
+<blockquote>
+<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4zomrmd0zg205y00k0o1.gif" alt="公式1"><br>而对于binary data，可以对输出层再用一次sigmoid函数，最后得到的则是数据的伯努利分布。这时候就不能用square error了，我们用交叉熵来替代。</p>
+</blockquote>
+<p>如果隐藏层的神经元少于数据的维度，那么就是把数据投影到低维度多样化的数据空间。而如果大于数据维度，那么对应的结构则会更加复杂。Regularized auto-encoders estimate local statistics一文中表示reconstruction function(r(x)-x)近似等于:</p>
+<blockquote>
+<p><img src="http://ww2.sinaimg.cn/large/76e7cc24gw1f4zoyetovxg206e0140sh.gif" alt="公式2"><br>同时从初始点开始学习，并且遵循其学习——比如gradient descent——的轨迹，同样可以看做是RBM采用Gibbs sampling的学习过程。</p>
+</blockquote>
+<p>接下来就利用”potential energy”来衡量ae学到的representation和training data有多像，而这个概念又和RBM的free energy的定义很相似。接下来提到向量域是梯度域情况则是在”integrability criterion”条件下(可积？)。</p>
+<h2 id="Energy-surface"><a href="#Energy-surface" class="headerlink" title="Energy surface"></a>Energy surface</h2><p>根据上文的推论，我们要求energy surface就要对reconstruction error进行积分：</p>
+<blockquote>
+<p><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f4zpciv4wwg20gh02bt8i.gif" alt="公式3"><br>这里的积分并不难，利用换元，u=Wx+b：<br><img src="http://ww2.sinaimg.cn/large/76e7cc24gw1f4zpfjtshag20ay015mwx.gif" alt="公式4"><br><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f4zpgk67i6g207h0153y9.gif" alt="公式5"><br>这样我们就得到所谓的”energy”。对于sigmoid，求积分之后为softplus函数：<br>H(u)=log(1+exp(u))<br>这时候我们可以发现这个函数和RBM中求free energy的样式一致。而上文提到的intractable constant也就是ae的积分常数。对于tanh，其激活函数是<br>(exp(u)-exp(-u))/(exp(u)+exp(-u))<br>积分之后的形式为<br>log(exp(u)+exp(-u)/2) – log(cosh(u)) – (u+softplus(-2u))<br>解下来是非常有趣的linear activation。而积分之后可以发现采用，他的形式就是很简单的对latent representation的规范化，也就是我们经常听到的PCA。同时我们在微分之后可以发现：<br><img src="http://ww2.sinaimg.cn/large/76e7cc24gw1f4zpsfznrog20ay014gld.gif" alt="公式6"><br>这在文中解释的，我们最后得到的Linear energy function是正确的形式，而且不必考虑W的形状和转置性(什么杰宝。)。<br>另外还有的激活函数是square,ReLU,Modulus,Synchrony,Maximum。对于使用Maximum来说，ae就相当于一个K-means算法。这段并不是看的太懂，毕竟我都忘了k-means具体计算的流程了。</p>
+</blockquote>
+<p>而通常来讲，我们在输出层也会加上激活函数，则之前提到的integrability criterion就不能保证，因为缺乏了对称性。比如我接下来要做的试验中，我们有三层hidden layer，对应的dim分别为200 175 150 175 200。正常的输出层我也会用tanh来激活，但是文中表示我们可以通过”log-odds” tansformation来定义新的向量域。不过文中仅仅是对应的sigmoid。</p>
+<p><strong> 至于我的tanh是否能保证我觉得还需要组会讨论下。 </strong></p>
+<h2 id="Divergence-of-an-autoencoder"><a href="#Divergence-of-an-autoencoder" class="headerlink" title="Divergence of an autoencoder"></a>Divergence of an autoencoder</h2><p>一个向量域的divergence就是其对应的梯度域，而梯度域就是数据中每个点的outward flux。也就是很简单的对应当前点变化最大的切线向量。如果某个点divergence是负得那么说明这个点sink，反之则是source，大概就是下降和上升的趋势。</p>
+<blockquote>
+<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4zqjza0qvg204q01b0sh.gif" alt="公式7"><br>而通常来讲，我们用的是二次微分：<br><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f4zqnobx8lg206k01da9t.gif" alt="公式8"><br>接下来就是把这个应用到ae的energy function中。<br><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f4zqr2mat2g2077016a9t.gif" alt="公式9"><br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f4zqsq3v27g20da00rwe9.gif" alt="公式10"></p>
+</blockquote>
+<p>下面这段抱歉我引用原文，因为我真的没怎么看明白这段话:</p>
+<blockquote>
+<p>From the perspective of reconstruction dynamics, a natural way to regularize the autoencoder is to turn training points into a sink of the dynamics (thus limiting the total amount of energy). In this case, a training point will not only be encouraged to act as a fixed point but also to be the center of a basin of attraction. Intuitively, traversing points that act as sinks amounts to loosing potential energy, so if the energy surface is bounded, the dynamics have to converge. Another perspective is that the only way to allow for perfect reconstruction of the data by overfitting is to learn a perfectly flat energy surface. But at points that are sinks, the curvature of the energy surface will be negative, making it impossible for the energy surface to be flat everywhere.</p>
+</blockquote>
+<p>而一个点要sink，只有保证公式10是小于0的。而regularization存在的意义就是为了保证&lt;的成立。其中一个的办法就是限制weight足够小。而实际上contractive regularizer的形势就是隐藏层关于权重的Jabob矩阵的frobenius norm。</p>
+<blockquote>
+<p><img src="http://ww2.sinaimg.cn/large/76e7cc24gw1f4zr954tveg204d00r0o8.gif" alt="公式11"></p>
+</blockquote>
+<p>Tied weight通常能保证ae有一个好的energy function，这是很重要的一点。但是即便不满足，contractive regularization也能保证vector field conservative，好吧又不懂了，并不能理解conservative的意思。接下来就是说明各种activation function下，为何不同的model可以保证near data。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>autoencoder有多种变形形式。<br>Contractive Autoencoder就是上文提到的。但依旧没能理解是如何转变为“加上惩罚项”。<br>Tied weight应该很重要，也是导致为何我实验失败的原因，但还不能太过于有信心，因为本身尚不能确定我们能从Word2vec中学到什么，就算学到了我们又可以用于什么样的tasks。<br>自己的数学功底还是不太行，看着类paper的时候非常的累。<br>另外引用下其他人对contractive的理解:</p>
+<blockquote>
+<p>Jacobian代表的是输入变化一点 你对应的输出的变化量，那么一个稳定的特征表示一定是对于这种微小的扰动robust的，也就是说它应该对于相似的输入保持相对一致的输出，这个motivation和denoising autoencoder是一致的<br>雅可比矩阵为输出层对输入层的偏导。如果这个矩阵每个元素值都一样，则相当于对训练数据进行了缩放的效果，这样的特征提取是没有意义的。雅可比矩阵特征值可以联系PCA进行思考，特征值大的对应的空间映射后的方差比较大（即数据潜在的低维流行）。在进行特征提取时，整个模型应该尽量去拟合这个低维流行上的数据，而忽略与这个低维流行中之外的数据（contractive的作用）。</p>
+</blockquote>
+<p>总之，雅克比行列式表示不同坐标下的转换尺度。但这里应该主要是针对过完备的表达。实际上降维的话直接L2范式应该足以。通过采用雅克比矩阵就使得每一个在高维流形上的点(也就是学到的特征)具有局部不变性。这个可以通过计算局部流形的一阶导数获得，于是就出现了雅克比矩阵。</p>
+<p><a href="https://www.youtube.com/watch?v=p4Vh_zMw-HQ" target="_blank" rel="external">RBM教学可以看看</a></p>
+
+        
+      </div>
+    </div>
+
+  
+    </div>
+  
 
   
   
