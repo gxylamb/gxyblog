@@ -193,9 +193,10 @@
 接下来应该写写RNN和LSTM的，不过要看我什么时候不懒吧。
 </code></pre></blockquote>
 <p>随机模拟这个东西，有个高大上的名字叫做蒙特卡洛模拟——Monte Carlo Simulation，名字来源于一个赌场，最早是费曼费米这些非人类用于曼哈顿计划的。统计学中最重要的问题就是 给定概率分布p(x)，我们如何在计算机生成对应的样本。均匀分布的样本是通过线性同余器和确定性算法产生[0,1]之间的伪随机数来模拟。而大部分的概率分布都可以通过(0,1)均匀分布的样本得到，譬如Box-Muller变换可以得到正态分布：</p>
-<pre><code>&gt; ![公式1](http://ww1.sinaimg.cn/large/76e7cc24gw1f5ee345mkzg205300n0mm.gif)
-&gt; ![公式2](http://ww4.sinaimg.cn/large/76e7cc24gw1f5ee3weklwg205400n0mi.gif)
-</code></pre><p>此时N<sub>0</sub>和N<sub>1</sub>独立且服从标准正态分布。但是当p(x)是高维的情形，就很难生成样本，那么就需要复杂的随机模拟方法生成样本。</p>
+<blockquote>
+<p><img src="http://ww1.sinaimg.cn/large/76e7cc24gw1f5ee345mkzg205300n0mm.gif" alt="公式1"><br><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f5ee3weklwg205400n0mi.gif" alt="公式2"></p>
+</blockquote>
+<p>此时N<sub>0</sub>和N<sub>1</sub>独立且服从标准正态分布。但是当p(x)是高维的情形，就很难生成样本，那么就需要复杂的随机模拟方法生成样本。</p>
 <h2 id="马尔科夫链"><a href="#马尔科夫链" class="headerlink" title="马尔科夫链"></a>马尔科夫链</h2><p>P(X<sub>t+1</sub>|X<sub>t</sub>,X<sub>t-1</sub>,…)=P(X<sub>t+1</sub>|X<sub>t</sub>)</p>
 <p>马尔科夫链表示的是状态转移概率仅跟前一个状态有关。引用下52NLP有关于社会学例子。社会学家会把人根据经济状况分为3类，i.e. 下层，中层，上层(真他喵现实)，用1,2,3分别代表每个state。社会学家认为决定一个人的收入阶层最重要因素是他们的上一代，“我爸是李刚”，那么状态转移表如下：</p>
 <blockquote>
