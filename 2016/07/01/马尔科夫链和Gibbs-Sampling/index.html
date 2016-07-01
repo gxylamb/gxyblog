@@ -26,12 +26,21 @@
 接下来应该写写RNN和LSTM的，不过要看我什么时候不懒吧。
 
 随机模拟这个东西，有个高大上的名字叫做蒙特卡洛模拟——Monte Carlo Simulation，名字来源于一">
+<meta property="og:image" content="http://www.52nlp.cn/wp-content/uploads/2013/01/table-1.jpg">
+<meta property="og:image" content="http://www.52nlp.cn/wp-content/uploads/2013/01/markov-transition.png">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f5eejd0iamg205301vjr5.gif">
+<meta property="og:image" content="http://www.52nlp.cn/wp-content/uploads/2013/01/table-2.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/76e7cc24gw1f5eeuw5y0fg20bg01vdfm.gif">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f5ef7t8mvzg201n00o0bt.gif">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/76e7cc24gw1f5efji2ru3g2086033a9u.gif">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/76e7cc24gw1f5efnetmerg203w01e0nn.gif">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/76e7cc24gw1f5eggu83wmg203h042mwx.gif">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f5eh0kqnbwg204u00i0op.gif">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/76e7cc24gw1f5eh1uqsb2g208z00ia9t.gif">
 <meta property="og:image" content="http://www.52nlp.cn/wp-content/uploads/2013/01/mcmc-transition1.jpg">
 <meta property="og:image" content="http://www.52nlp.cn/wp-content/uploads/2013/01/mcmc-algo-2.jpg">
 <meta property="og:image" content="http://www.52nlp.cn/wp-content/uploads/2013/01/gibbs-algo-1.jpg">
-<meta property="og:updated_time" content="2016-07-01T08:51:03.965Z">
+<meta property="og:updated_time" content="2016-07-01T08:53:22.443Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="马尔科夫链和Gibbs Sampling">
 <meta name="twitter:description" content="Markov Chain Monte Carlo &amp;amp; Gibbs Sampling
@@ -39,7 +48,7 @@
 接下来应该写写RNN和LSTM的，不过要看我什么时候不懒吧。
 
 随机模拟这个东西，有个高大上的名字叫做蒙特卡洛模拟——Monte Carlo Simulation，名字来源于一">
-<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/76e7cc24gw1f5eh0kqnbwg204u00i0op.gif">
+<meta name="twitter:image" content="http://www.52nlp.cn/wp-content/uploads/2013/01/table-1.jpg">
 
 
   <link rel="alternative" href="/atom.xml" title="Minas Tirith" type="application/atom+xml">
@@ -200,23 +209,33 @@
 </code></pre><p>此时N<sub>0</sub>和N<sub>1</sub>独立且服从标准正态分布。但是当p(x)是高维的情形，就很难生成样本，那么就需要复杂的随机模拟方法生成样本。</p>
 <h2 id="马尔科夫链"><a href="#马尔科夫链" class="headerlink" title="马尔科夫链"></a>马尔科夫链</h2><p>P(X<sub>t+1</sub>|X<sub>t</sub>,X<sub>t-1</sub>,…)=P(X<sub>t+1</sub>|X<sub>t</sub>)</p>
 <p>马尔科夫链表示的是状态转移概率仅跟前一个状态有关。引用下52NLP有关于社会学例子。社会学家会把人根据经济状况分为3类，i.e. 下层，中层，上层(真他喵现实)，用1,2,3分别代表每个state。社会学家认为决定一个人的收入阶层最重要因素是他们的上一代，“我爸是李刚”，那么状态转移表如下：</p>
-<pre><code>&gt; ![转移表1](http://www.52nlp.cn/wp-content/uploads/2013/01/table-1.jpg)    
-&gt; ![转移表2](http://www.52nlp.cn/wp-content/uploads/2013/01/markov-transition.png)
-</code></pre><p>其状态转移矩阵如下：</p>
-<pre><code>&gt; ![转移矩阵](http://ww4.sinaimg.cn/large/76e7cc24gw1f5eejd0iamg205301vjr5.gif)
-</code></pre><p>假设初始某一代处于1,2,3三种状态的概率为π<sub>0</sub>=[π<sub>0</sub>(1),π<sub>0</sub>(2),π<sub>0</sub>(3)],那么下一代π<sub>1</sub>在三种状态分布的比例为π<sub>1</sub>=π<sub>0</sub>P，再下一代π<sub>2</sub>=π<sub>1</sub>P=π<sub>0</sub>P<sup>2</sup>，依次递归定义。</p>
+<blockquote>
+<p><img src="http://www.52nlp.cn/wp-content/uploads/2013/01/table-1.jpg" alt="转移表1"><br><img src="http://www.52nlp.cn/wp-content/uploads/2013/01/markov-transition.png" alt="转移表2"></p>
+</blockquote>
+<p>其状态转移矩阵如下：</p>
+<blockquote>
+<p><img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f5eejd0iamg205301vjr5.gif" alt="转移矩阵"></p>
+</blockquote>
+<p>假设初始某一代处于1,2,3三种状态的概率为π<sub>0</sub>=[π<sub>0</sub>(1),π<sub>0</sub>(2),π<sub>0</sub>(3)],那么下一代π<sub>1</sub>在三种状态分布的比例为π<sub>1</sub>=π<sub>0</sub>P，再下一代π<sub>2</sub>=π<sub>1</sub>P=π<sub>0</sub>P<sup>2</sup>，依次递归定义。</p>
 <p>假设最初一代的概率为π<sub>0</sub>=[0.21,0.68,0.11]，可以计算解析来没代人的分布如下：</p>
-<pre><code>&gt; ![分布1](http://www.52nlp.cn/wp-content/uploads/2013/01/table-2.jpg)
-</code></pre><p>然后发现到了第七代这个概率就稳定不变了，然而我们换一个初始化其结果 依旧如此。而且最终收敛的概率分布都是一样的，不论我们怎么初始化。所以明显可以看出，P决定了最后的收敛状态。所以需要计算下P<sup>n</sup>。</p>
-<pre><code>&gt; ![公式3](http://ww3.sinaimg.cn/large/76e7cc24gw1f5eeuw5y0fg20bg01vdfm.gif)
-&gt; 马尔科夫链定理： 如果一个非周期马尔科夫链具有转移概率状态矩阵P，而且任何两个状态都是想通的，那么![公式8](http://ww4.sinaimg.cn/large/76e7cc24gw1f5ef7t8mvzg201n00o0bt.gif)存在且与i无关。
-1. ![公式4](http://ww1.sinaimg.cn/large/76e7cc24gw1f5efji2ru3g2086033a9u.gif)
-2. ![公式5](http://ww1.sinaimg.cn/large/76e7cc24gw1f5efnetmerg203w01e0nn.gif)
-3. π=πP 是这个方程的唯一非负解。
-</code></pre><p>π成为马尔科夫链的平稳分布。而且该定理并没有限定状态的个数，我们发现i可以趋近于无穷个。两个状态连通是指可以通过有限个状态转移达到。</p>
-<pre><code>&gt; ![公式6](http://ww3.sinaimg.cn/large/76e7cc24gw1f5eggu83wmg203h042mwx.gif)
-</code></pre><p>可以看到X<sub>n</sub>，X<sub>n+1</sub>…都是同分布的随机变量。也就是说如果从一个初始状态x<sub>0</sub>开始沿着马尔科夫链进行转移，最后会得到一个转移序列，而由于其收敛的行为，x<sub>n</sub>,x<sub>n+1</sub>,…都将是平稳分布的π(x)的样本。</p>
-<h2 id="Gibbs-Sampling"><a href="#Gibbs-Sampling" class="headerlink" title="Gibbs Sampling"></a>Gibbs Sampling</h2><p>所以问题的关键是构造一个转移矩阵，而马尔科夫链的细致平稳条件要满足：<br>    π(i)P<sub>ij</sub>=π(j)P<sub>ji</sub><br>这个定理的含义是“对于任何两个状态i,j, 从 i 转移出去到j 而丢失的概率质量，恰好会被从 j 转移回i 的概率质量补充回来，所以状态i上的概率质量π(i)是稳定的，从而π(x)是马氏链的平稳分布。”(有点晦涩)。而通常情况下转移矩阵并不满足条件，<img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f5eh0kqnbwg204u00i0op.gif" alt="">，所以我们要进行对称转换<img src="http://ww1.sinaimg.cn/large/76e7cc24gw1f5eh1uqsb2g208z00ia9t.gif" alt="">，改造之后的冗余项α(i,j)我们称之为接受率，当从i以q(i,j)的概率转移到j的时候，以α(i,j)为概率接受这个转移，于是新的转移概率为q(i,j)α(i,j)。<br>    <img src="http://www.52nlp.cn/wp-content/uploads/2013/01/mcmc-transition1.jpg" alt="公式7"><br>又经过对MCMC 采样算法中接受率的微小改造（因为接受率可能过小导致原地踏步），我们就得到了如下教科书中最常见的 Metropolis-Hastings 算法。<br>    <img src="http://www.52nlp.cn/wp-content/uploads/2013/01/mcmc-algo-2.jpg" alt="算法1"></p>
+<blockquote>
+<p><img src="http://www.52nlp.cn/wp-content/uploads/2013/01/table-2.jpg" alt="分布1"></p>
+</blockquote>
+<p>然后发现到了第七代这个概率就稳定不变了，然而我们换一个初始化其结果 依旧如此。而且最终收敛的概率分布都是一样的，不论我们怎么初始化。所以明显可以看出，P决定了最后的收敛状态。所以需要计算下P<sup>n</sup>。</p>
+<blockquote>
+<p><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f5eeuw5y0fg20bg01vdfm.gif" alt="公式3"><br>马尔科夫链定理： 如果一个非周期马尔科夫链具有转移概率状态矩阵P，而且任何两个状态都是想通的，那么<img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f5ef7t8mvzg201n00o0bt.gif" alt="公式8">存在且与i无关。</p>
+<ol>
+<li><img src="http://ww1.sinaimg.cn/large/76e7cc24gw1f5efji2ru3g2086033a9u.gif" alt="公式4"></li>
+<li><img src="http://ww1.sinaimg.cn/large/76e7cc24gw1f5efnetmerg203w01e0nn.gif" alt="公式5"></li>
+<li>π=πP 是这个方程的唯一非负解。</li>
+</ol>
+</blockquote>
+<p>π成为马尔科夫链的平稳分布。而且该定理并没有限定状态的个数，我们发现i可以趋近于无穷个。两个状态连通是指可以通过有限个状态转移达到。</p>
+<blockquote>
+<p><img src="http://ww3.sinaimg.cn/large/76e7cc24gw1f5eggu83wmg203h042mwx.gif" alt="公式6"></p>
+</blockquote>
+<p>可以看到X<sub>n</sub>，X<sub>n+1</sub>…都是同分布的随机变量。也就是说如果从一个初始状态x<sub>0</sub>开始沿着马尔科夫链进行转移，最后会得到一个转移序列，而由于其收敛的行为，x<sub>n</sub>,x<sub>n+1</sub>,…都将是平稳分布的π(x)的样本。</p>
+<h2 id="Gibbs-Sampling"><a href="#Gibbs-Sampling" class="headerlink" title="Gibbs Sampling"></a>Gibbs Sampling</h2><p>所以问题的关键是构造一个转移矩阵，而马尔科夫链的细致平稳条件要满足：<br>    π(i)P<sub>ij</sub>=π(j)P<sub>ji</sub><br>这个定理的含义是“对于任何两个状态i,j, 从 i 转移出去到j 而丢失的概率质量，恰好会被从 j 转移回i 的概率质量补充回来，所以状态i上的概率质量π(i)是稳定的，从而π(x)是马氏链的平稳分布。”(有点晦涩)。而通常情况下转移矩阵并不满足条件，<img src="http://ww4.sinaimg.cn/large/76e7cc24gw1f5eh0kqnbwg204u00i0op.gif" alt="条件1">，所以我们要进行对称转换<img src="http://ww1.sinaimg.cn/large/76e7cc24gw1f5eh1uqsb2g208z00ia9t.gif" alt="转换1">，改造之后的冗余项α(i,j)我们称之为接受率，当从i以q(i,j)的概率转移到j的时候，以α(i,j)为概率接受这个转移，于是新的转移概率为q(i,j)α(i,j)。<br>    <img src="http://www.52nlp.cn/wp-content/uploads/2013/01/mcmc-transition1.jpg" alt="公式7"><br>又经过对MCMC 采样算法中接受率的微小改造（因为接受率可能过小导致原地踏步），我们就得到了如下教科书中最常见的 Metropolis-Hastings 算法。<br>    <img src="http://www.52nlp.cn/wp-content/uploads/2013/01/mcmc-algo-2.jpg" alt="算法1"></p>
 <p>但是高维的情形就没有那么的简单了。假设二维情形：</p>
 <pre><code>&gt; p(x1,y1)p(y2|x1)=p(x1)p(y1|x1)p(y2|x1)
 &gt; p(x1,y2)p(y1|x1)=p(x1)p(y2|x1)p(y1|x1)
